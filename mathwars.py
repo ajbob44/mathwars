@@ -62,34 +62,34 @@ def straight(points):
         e = ""
     return equation
 
-def straightnobreaks(points):
+def straightnobreaks(points,pre):
     equation = ""
     e = ""
     for i in range(len(points)):
         if i == len(points)-1:
             break
         if points[i][0] == 0:
-            e += f"(abs(x-1)-abs(x)-1)*"
+            e += f"(abs({pre}*x-1)-abs({pre}*x)-1)*"
         elif points[i][0] > 0:
-            e += f"(abs((x-{points[i][0]})-1)-abs((x-{points[i][0]}))-1)*"
+            e += f"(abs({pre}*(x-{points[i][0]})-1)-abs({pre}*(x-{points[i][0]}))-1)*"
         else:
-            e += f"(abs((x+{-points[i][0]})-1)-abs((x+{-points[i][0]}))-1)*"
+            e += f"(abs({pre}*(x+{-points[i][0]})-1)-abs({pre}*(x+{-points[i][0]}))-1)*"
 
         if points[i+1][0] == 0:
-            e += f"(abs(x-1)-abs(x)+1)*"
+            e += f"(abs({pre}*x-1)-abs({pre}*x)+1)*"
         elif points[i+1][0] > 0:
-            e += f"(abs((x-{points[i+1][0]})-1)-abs((x-{points[i+1][0]}))+1)*"
+            e += f"(abs({pre}*(x-{points[i+1][0]})-1)-abs({pre}*(x-{points[i+1][0]}))+1)*"
         else:
-            e += f"(abs((x+{-points[i+1][0]})-1)-abs((x+{-points[i+1][0]}))+1)*"
+            e += f"(abs({pre}*(x+{-points[i+1][0]})-1)-abs({pre}*(x+{-points[i+1][0]}))+1)*"
 
         if points[i][0] > 0 and points[i][1] > 0:
-            e+=f"({round((points[i+1][1]-points[i][1])/(points[i+1][0]-points[i][0]),3)}(x-{points[i][0]})+{points[i][1]})"
+            e+=f"({round((points[i+1][1]-points[i][1])/(points[i+1][0]-points[i][0]),3)}*(x-{points[i][0]})+{points[i][1]})"
         elif points[i][0] < 0 and points[i][1] > 0:
-            e+=f"({round((points[i+1][1]-points[i][1])/(points[i+1][0]-points[i][0]),3)}(x+{-points[i][0]})+{points[i][1]})"
+            e+=f"({round((points[i+1][1]-points[i][1])/(points[i+1][0]-points[i][0]),3)}*(x+{-points[i][0]})+{points[i][1]})"
         elif points[i][0] > 0 and points[i][1] < 0:
-            e+=f"({round((points[i+1][1]-points[i][1])/(points[i+1][0]-points[i][0]),3)}(x-{points[i][0]})-{-points[i][1]})"
+            e+=f"({round((points[i+1][1]-points[i][1])/(points[i+1][0]-points[i][0]),3)}*(x-{points[i][0]})-{-points[i][1]})"
         else:
-            e+=f"({round((points[i+1][1]-points[i][1])/(points[i+1][0]-points[i][0]),3)}(x+{-points[i][0]})-{-points[i][1]})"
+            e+=f"({round((points[i+1][1]-points[i][1])/(points[i+1][0]-points[i][0]),3)}*(x+{-points[i][0]})-{-points[i][1]})"
 
         equation+=f"-1/4{e}"
         e = ""
@@ -108,4 +108,6 @@ while True:
 
         points.append([x,y])
 
-    print(straightnobreaks(points))
+    print("no breaks "+straightnobreaks(points,1))
+    print("breaks "+straight(points))
+    print("polynomial "+ laplace(points))
