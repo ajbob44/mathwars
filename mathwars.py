@@ -20,10 +20,10 @@ def laplace(points):
         if point[1] == 0:
             e = ""
             continue
-        if eval(e[:-1])/point[1] > 1:
-            e+="1/"+str(round(eval(e[:-1])/point[1]))
+        if abs(eval(e[:-1])/point[1]) > 1:
+            e+="1/"+str(round(eval(e[:-1])/point[1],4))
         else:
-            e+=str(round(eval(e[:-1])/point[1]))
+            e+=str(round(eval(e[:-1])/point[1],4))
         equation+=f"+{e}"
         e = ""
 
@@ -107,6 +107,8 @@ while True:
         x=int(x)
 
         points.append([x,y])
+
+    points = sorted(points, key=lambda x:x[0])
 
     print("no breaks "+straightnobreaks(points,1))
     print("breaks "+straight(points))
